@@ -101,12 +101,14 @@
             transition: all 0.3s ease;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             cursor: pointer;
+            display: block;
         }
 
         .nav-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
             color: white;
+            text-decoration: none;
         }
 
         .nav-card .icon {
@@ -143,11 +145,6 @@
             padding: 40px;
             margin-bottom: 30px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            display: none;
-        }
-
-        .content-section.active {
-            display: block;
         }
 
         .section-title {
@@ -385,40 +382,40 @@
 
         <!-- Navigation -->
         <nav class="nav-grid">
-            <a href="#research" class="nav-card research-card" onclick="showSection('research')">
+            <a href="#research" class="nav-card research-card">
                 <span class="icon">🔬</span>
                 <h3>Research</h3>
                 <p>Spectroscopy, machine learning, and forensic applications</p>
             </a>
-            <a href="#students" class="nav-card students-card" onclick="showSection('students')">
+            <a href="#students" class="nav-card students-card">
                 <span class="icon">👥</span>
                 <h3>Lab Members</h3>
                 <p>Meet our talented PhD students</p>
             </a>
-            <a href="#publications" class="nav-card publications-card" onclick="showSection('publications')">
+            <a href="#publications" class="nav-card publications-card">
                 <span class="icon">📚</span>
                 <h3>Publications</h3>
                 <p>Recent research publications and findings</p>
             </a>
-            <a href="#equipment" class="nav-card equipment-card" onclick="showSection('equipment')">
+            <a href="#equipment" class="nav-card equipment-card">
                 <span class="icon">⚡</span>
                 <h3>Equipment</h3>
                 <p>State-of-the-art analytical instruments</p>
             </a>
-            <a href="#courses" class="nav-card courses-card" onclick="showSection('courses')">
+            <a href="#courses" class="nav-card courses-card">
                 <span class="icon">📖</span>
                 <h3>Teaching</h3>
                 <p>Advanced statistics and multivariate analysis</p>
             </a>
-            <a href="#adventures" class="nav-card adventures-card" onclick="showSection('adventures')">
+            <a href="#adventures" class="nav-card adventures-card">
                 <span class="icon">🏔️</span>
-                <h3>Alpine Adventures</h3>
-                <p>Hiking in the Austrian Alps</p>
+                <h3>Mountain Adventures</h3>
+                <p>Hiking around the world</p>
             </a>
         </nav>
 
         <!-- Research Section -->
-        <section id="research" class="content-section active">
+        <section id="research" class="content-section">
             <h2 class="section-title">Research Focus</h2>
             
             <p style="font-size: 1.2em; margin-bottom: 30px; color: #555;">
@@ -613,3 +610,15 @@
 
             <div class="section-subtitle">Mountain Philosophy</div>
             <p>Whether it's the green valleys and limestone cliffs of Austria, the dramatic rock formations of New Mexico's high peaks, or the peaceful grasslands of Dog Canyon, each landscape offers something unique. The variety keeps me inspired - from technical alpine routes to long desert walks under endless skies. There's something about the physical challenge and natural beauty that helps put research problems into perspective and often leads to creative breakthroughs when I return to the lab.</p>
+        </section>
+
+        <!-- Contact Information -->
+        <div class="contact-info">
+            <h3>Contact Information</h3>
+            <p>Email: Lenka.Halamkova@ttu.edu</p>
+            <p>Department of Environmental Toxicology</p>
+            <p>Texas Tech University, Lubbock, TX</p>
+        </div>
+    </div>
+</body>
+</html>
