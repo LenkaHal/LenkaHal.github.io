@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halámková Lab - Environmental Toxicology & Data Science</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Section */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid #667eea;
+            object-fit: cover;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-info h1 {
+            color: #2c3e50;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .lab-name {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3.2em;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .profile-info .title {
+            color: #7f8c8d;
+            font-size: 1.4em;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .profile-info .university {
+            color: #34495e;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        /* Navigation */
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .nav-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+        .nav-card .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .nav-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        .nav-card p {
+            font-size: 1em;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        /* Specialty Card Colors */
+        .research-card { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+        .students-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .publications-card { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .equipment-card { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .courses-card { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .adventures-card { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #2c3e50 !important; }
+
+        /* Content Sections */
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-title {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            color: #667eea;
+            font-size: 1.8em;
+            margin: 30px 0 15px 0;
+            font-weight: 600;
+        }
+
+        /* Research Focus Areas */
+        .research-areas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .research-area {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .research-area:hover {
+            transform: translateX(10px);
+        }
+
+        .research-area h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        /* Lab Members */
+        .lab-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 25px 0;
+        }
+
+        .member-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .member-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .member-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            object-fit: cover;
+            border: 4px solid #667eea;
+        }
+
+        .member-name {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .member-role {
+            color: #667eea;
+            font-style: italic;
+        }
+
+        /* Equipment Grid */
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 25px 0;
+        }
+
+        .equipment-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .equipment-card:hover {
+            transform: scale(1.02);
+        }
+
+        .equipment-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .equipment-content {
+            padding: 25px;
+        }
+
+        .equipment-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        /* Publication List */
+        .publication {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .pub-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .pub-authors {
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .pub-journal {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.95em;
+        }
+
+        /* Adventure Photos */
+        .adventure-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .adventure-photo {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .adventure-photo:hover {
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .profile-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .lab-name {
+                font-size: 2.5em;
+            }
+
+            .profile-info h1 {
+                font-size: 2.2em;
+            }
+
+            .nav-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 15px;
+            }
+        }
+
+        /* Contact Information */
+        .contact-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .contact-info p {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="lab-name">Halámková Lab</div>
+            <div class="profile-section">
+                <img src="Lenka_Halamkova_Photo.jpg" alt="Dr. Lenka Halámková" class="profile-image">
+                <div class="profile-info">
+                    <h1>Dr. Lenka Halámková</h1>
+                    <div class="title">Assistant Professor</div>
+                    <div class="university">Department of Environmental Toxicology<br>Texas Tech University, Lubbock, TX</div>
+                </div>
+            </div>
+            
+            <p style="font-size: 1.2em; color: #555; margin-top: 20px; line-height: 1.6;">
+                Welcome to our lab where we combine cutting-edge analytical chemistry with machine learning to solve real-world problems in forensic science, environmental toxicology, and public health.
+            </p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav-grid">
+            <a href="#research" class="nav-card research-card" onclick="showSection('research')">
+                <span class="icon">🔬</span>
+                <h3>Research</h3>
+                <p>Spectroscopy, machine learning, and forensic applications</p>
+            </a>
+            <a href="#students" class="nav-card students-card" onclick="showSection('students')">
+                <span class="icon">👥</span>
+                <h3>Lab Members</h3>
+                <p>Meet our talented PhD students</p>
+            </a>
+            <a href="#publications" class="nav-card publications-card" onclick="showSection('publications')">
+                <span class="icon">📚</span>
+                <h3>Publications</h3>
+                <p>Recent research publications and findings</p>
+            </a>
+            <a href="#equipment" class="nav-card equipment-card" onclick="showSection('equipment')">
+                <span class="icon">⚡</span>
+                <h3>Equipment</h3>
+                <p>State-of-the-art analytical instruments</p>
+            </a>
+            <a href="#courses" class="nav-card courses-card" onclick="showSection('courses')">
+                <span class="icon">📖</span>
+                <h3>Teaching</h3>
+                <p>Advanced statistics and multivariate analysis</p>
+            </a>
+            <a href="#adventures" class="nav-card adventures-card" onclick="showSection('adventures')">
+                <span class="icon">🏔️</span>
+                <h3>Alpine Adventures</h3>
+                <p>Hiking in the Austrian Alps</p>
+            </a>
+        </nav>
+
+        <!-- Research Section -->
+        <section id="research" class="content-section active">
+            <h2 class="section-title">Research Focus</h2>
+            
+            <p style="font-size: 1.2em; margin-bottom: 30px; color: #555;">
+                Our lab sits at the intersection of analytical chemistry, data science, and real-world applications. We develop innovative methods that combine vibrational spectroscopy with machine learning to tackle challenges in forensic science, toxicology, and public health.
+            </p>
+
+            <div class="research-areas">
+                <div class="research-area">
+                    <h3>🔍 Forensic Drug Detection</h3>
+                    <p>Developing rapid, non-destructive methods to detect fentanyl and other dangerous substances in biological samples using advanced spectroscopic techniques.</p>
+                </div>
+                <div class="research-area">
+                    <h3>🧠 Machine Learning Applications</h3>
+                    <p>Applying neural networks, random forests, and other ML algorithms to extract meaningful patterns from complex spectroscopic data.</p>
+                </div>
+                <div class="research-area">
+                    <h3>📊 High-Dimensional Data Analysis</h3>
+                    <p>Developing statistical methods to handle complex, high-dimensional datasets common in biological and environmental research.</p>
+                </div>
+                <div class="research-area">
+                    <h3>🦌 Wildlife Disease Diagnostics</h3>
+                    <p>Creating innovative diagnostic tools for chronic wasting disease in wildlife populations using Raman spectroscopy.</p>
+                </div>
+                <div class="research-area">
+                    <h3>🧬 Enzyme Kinetics & Inhibition</h3>
+                    <p>Understanding molecular mechanisms of enzyme inhibition through combined spectroscopic and computational approaches.</p>
+                </div>
+                <div class="research-area">
+                    <h3>🌿 Environmental Applications</h3>
+                    <p>Applying multivariate statistics to understand environmental toxicology and biological system responses.</p>
+                </div>
+            </div>
+
+            <div class="section-subtitle">Recent Breakthroughs</div>
+            <p>Our recent work has shown that machine learning can achieve over 90% accuracy in detecting fentanyl from human nail samples - potentially revolutionizing workplace drug testing. We've also developed methods that can diagnose chronic wasting disease in wildlife with 100% accuracy at the animal level, offering new hope for wildlife conservation efforts.</p>
+        </section>
+
+        <!-- Students Section -->
+        <section id="students" class="content-section">
+            <h2 class="section-title">Lab Members</h2>
+            
+            <div class="lab-members">
+                <div class="member-card">
+                    <img src="abraham olayeri-crop-u4241139.jpg" alt="Abraham Olayeri" class="member-photo">
+                    <div class="member-name">Abraham Olayeri</div>
+                    <div class="member-role">PhD Student</div>
+                </div>
+                <div class="member-card">
+                    <img src="md saluhaddin majumer-crop-u4240511.jpg" alt="Salahuddin Majumder" class="member-photo">
+                    <div class="member-name">Salahuddin Majumder</div>
+                    <div class="member-role">PhD Student</div>
+                </div>
+            </div>
+
+            <div class="section-subtitle">Research Environment</div>
+            <p>Our lab provides a collaborative environment where students gain hands-on experience with cutting-edge analytical instruments and develop skills in both experimental design and computational data analysis. Students work on projects that directly impact public health and safety while contributing to the scientific literature.</p>
+        </section>
+
+        <!-- Publications Section -->
+        <section id="publications" class="content-section">
+            <h2 class="section-title">Recent Publications</h2>
+            
+            <div class="publication">
+                <div class="pub-title">From Spectra to Signatures: Detecting Fentanyl in Human Nails with ATR–FTIR and Machine Learning</div>
+                <div class="pub-authors">Barney, A., Trojan, V., Hrib, R., Newland, A., Halámek, J., Halámková, L.</div>
+                <div class="pub-journal">Sensors (2025), 25(1), 227</div>
+            </div>
+
+            <div class="publication">
+                <div class="pub-title">Attenuated total reflection Fourier transform infrared spectroscopy (ATR-FTIR) analysis of human nails: Implications for age determination in forensics</div>
+                <div class="pub-authors">Mitu, B., Trojan, V., Hrib, R., Halámková, L.</div>
+                <div class="pub-journal">Journal of Forensic Sciences (2025), 70: 150-160</div>
+            </div>
+
+            <div class="publication">
+                <div class="pub-title">Phenotypic profiling based on body fluid traces discovered at the scene of crime: Raman spectroscopy of urine stains for race differentiation</div>
+                <div class="pub-authors">Vyas, B., Halámková, L., Lednev, I. K.</div>
+                <div class="pub-journal">Analyst (2024), 149, 20: 5081-5090</div>
+            </div>
+
+            <div class="publication">
+                <div class="pub-title">Evaluation of Fentanyl Exposure Effects on Butyrylcholinesterase Activity as a Tool for Future On-Site Detection Methods</div>
+                <div class="pub-authors">Rania, V., Newland, A., Halámková, L., Trojan, V., Hřib, R., Halámek, J.</div>
+                <div class="pub-journal">ACS Omega (2024), 9, 38, 40234-40241</div>
+            </div>
+
+            <div class="publication">
+                <div class="pub-title">Sex Determination of Human Nails Based on Attenuated Total Reflection Fourier Transform Infrared Spectroscopy in Forensic Context</div>
+                <div class="pub-authors">Mitu, B., Trojan, V., Halámková, L.</div>
+                <div class="pub-journal">Sensors (2023), 23, 9412</div>
+            </div>
+
+            <div class="publication">
+                <div class="pub-title">Attenuated Total Reflection Fourier Transform Infrared (ATR FT-IR) spectroscopy For Forensic Screening of Long-Term Alcohol Consumption from Human Nails</div>
+                <div class="pub-authors">Mitu, B., Cerda, M., Hrib, R, Trojan, V., Halámková, L.</div>
+                <div class="pub-journal">ACS Omega (2023), 8, 24, 22203–22210</div>
+            </div>
+
+            <p style="margin-top: 30px; color: #667eea; font-style: italic;">Complete publication list includes over 15 peer-reviewed articles in high-impact journals including Analyst, ACS Omega, Sensors, and Journal of Forensic Sciences.</p>
+        </section>
+
+        <!-- Equipment Section -->
+        <section id="equipment" class="content-section">
+            <h2 class="section-title">Laboratory Equipment</h2>
+            
+            <div class="equipment-grid">
+                <div class="equipment-card">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='350' height='200' viewBox='0 0 350 200'%3E%3Crect width='350' height='200' fill='%23f8f9fa'/%3E%3Crect x='50' y='60' width='250' height='80' fill='%23667eea' rx='10'/%3E%3Ctext x='175' y='105' font-family='Arial' font-size='16' fill='white' text-anchor='middle'%3ERaman Microscope%3C/text%3E%3C/svg%3E" alt="DXR3 Raman Microscope" class="equipment-image">
+                    <div class="equipment-content">
+                        <h3 class="equipment-title">DXR3™ Raman Microscope</h3>
+                        <p>Next-generation Thermo Fisher Scientific DXR3™ Raman Microscope for investigating chemical and molecular properties of materials. Features real-time preview, automated fluorescence correction, autoexposure, and cosmic ray rejection. Essential for analyzing evidence such as fibers, paints, drugs, and crime scene materials.</p>
+                    </div>
+                </div>
+                
+                <div class="equipment-card">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='350' height='200' viewBox='0 0 350 200'%3E%3Crect width='350' height='200' fill='%23f8f9fa'/%3E%3Crect x='50' y='60' width='250' height='80' fill='%2364b5f6' rx='10'/%3E%3Ctext x='175' y='105' font-family='Arial' font-size='16' fill='white' text-anchor='middle'%3EFTIR Spectrometer%3C/text%3E%3C/svg%3E" alt="FTIR Spectrometer" class="equipment-image">
+                    <div class="equipment-content">
+                        <h3 class="equipment-title">Thermo Scientific™ Nicolet™ iS20 FTIR Spectrometer</h3>
+                        <p>Advanced FTIR spectroscopy system for identifying organic, polymeric, and inorganic materials. Uses infrared light to observe chemical characteristics, creating molecular fingerprints unique to each sample. Critical for forensic analysis and material identification.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-subtitle">Analytical Capabilities</div>
+            <p>Our state-of-the-art equipment allows us to perform non-destructive analysis of a wide range of samples, from biological tissues to forensic evidence. The combination of Raman and FTIR spectroscopy provides complementary information about molecular structure and composition, enabling comprehensive characterization of complex samples.</p>
+        </section>
+
+        <!-- Courses Section -->
+        <section id="courses" class="content-section">
+            <h2 class="section-title">Teaching</h2>
+            
+            <div class="research-areas">
+                <div class="research-area">
+                    <h3>ENTX 6300</h3>
+                    <h4>Advanced Topics in Environmental Toxicology: Applied Multivariate Statistics & Machine Learning</h4>
+                    <p>Advanced graduate course covering cutting-edge statistical methods and machine learning applications in environmental toxicology. Students learn to handle high-dimensional data and apply modern computational approaches to real-world problems.</p>
+                </div>
+                <div class="research-area">
+                    <h3>ENTX 6385</h3>
+                    <h4>Applied Statistics in Environmental Science</h4>
+                    <p>Practical application of statistical methods to environmental data. Covers experimental design, hypothesis testing, regression analysis, and data visualization techniques essential for environmental research.</p>
+                </div>
+            </div>
+
+            <div class="section-subtitle">Teaching Philosophy</div>
+            <p>I believe in hands-on learning where students work with real datasets and learn to apply statistical methods to solve actual research problems. My courses emphasize both theoretical understanding and practical skills, preparing students to use advanced analytical methods in their own research.</p>
+        </section>
+
+        <!-- Adventures Section -->
+        <section id="adventures" class="content-section">
+            <h2 class="section-title">Mountain Adventures</h2>
+            
+            <p style="font-size: 1.2em; margin-bottom: 30px; color: #555;">
+                When I'm not in the lab analyzing data, you'll find me exploring mountain landscapes across the globe. From the dramatic limestone peaks of the Austrian Alps to the rugged desert mountains of New Mexico, each adventure offers its own unique beauty and challenges.
+            </p>
+
+            <div class="section-subtitle">Austrian Alps - Ennstal & Gesäuse National Park</div>
+            <p style="margin-bottom: 25px;">The Ennstal Alps and Gesäuse National Park offer some of the most spectacular alpine hiking I've experienced. The limestone cliffs, pristine lakes, and traditional mountain huts create an unforgettable landscape that feels almost magical.</p>
+
+            <div class="adventure-gallery">
+                <img src="GesauseNP.jpg" alt="Austrian Alps limestone peaks" class="adventure-photo">
+                <img src="GesauseNP1.jpg" alt="Alpine lake in Gesäuse" class="adventure-photo">
+                <img src="GesauseNP2.jpg" alt="Austrian mountain hut with panoramic views" class="adventure-photo">
+                <img src="Hochkatz.jpg" alt="Hochkatz mountain trail" class="adventure-photo">
+                <img src="Hochkatz1.jpg" alt="Hochkatz summit views" class="adventure-photo">
+                <img src="Hochblaser.jpg" alt="Hochblaser peak" class="adventure-photo">
+                <img src="Hochblaser1.jpg" alt="Hochblaser mountain landscapes" class="adventure-photo">
+                <img src="Hochblaser2.jpg" alt="Hochblaser hiking trails" class="adventure-photo">
+                <img src="Hochblaser3.jpg" alt="Hochblaser alpine scenery" class="adventure-photo">
+            </div>
+
+            <div class="section-subtitle">Sandia Mountains, New Mexico - Desert High Country</div>
+            <p style="margin-bottom: 25px;">The Sandia Mountains via South Crest Trail and La Luz Trail offer a completely different but equally spectacular experience. These desert peaks rise dramatically from the high desert, with incredible rock formations and sweeping views across New Mexico.</p>
+
+            <div class="adventure-gallery">
+                <img src="Sandia.jpg" alt="Sandia Mountains desert landscape" class="adventure-photo">
+                <img src="Sandia1.jpg" alt="Dramatic Sandia rock formations" class="adventure-photo">
+                <img src="Sandia2.jpg" alt="Sandia Mountains pinnacles and canyons" class="adventure-photo">
+                <img src="Sandia3.jpg" alt="Sandia desert high country" class="adventure-photo">
+            </div>
+
+            <div class="section-subtitle">Dog Canyon Campground - Desert Wilderness</div>
+            <p style="margin-bottom: 25px;">Dog Canyon offers a different kind of desert experience with rolling hills, grasslands, and endless skies. The Marcus, Blue Ridge and Bush Mt. trail (17 miles), Indian Meadow Natural Trail, and Lost Peak provide diverse hiking through this peaceful wilderness area.</p>
+
+            <div class="adventure-gallery">
+                <img src="Dog.jpg" alt="Dog Canyon grassland valleys" class="adventure-photo">
+                <img src="Dog1.jpg" alt="Dog Canyon trail with hiker silhouette" class="adventure-photo">
+                <img src="Dog2.jpg" alt="Dog Canyon rolling hills landscape" class="adventure-photo">
+                <img src="Dog3.jpg" alt="Dog Canyon desert wilderness" class="adventure-photo">
+                <img src="Dog4.jpg" alt="Dog Canyon vast desert views" class="adventure-photo">
+            </div>
+
+            <div class="section-subtitle">Mountain Philosophy</div>
+            <p>Whether it's the green valleys and limestone cliffs of Austria, the dramatic rock formations of New Mexico's high peaks, or the peaceful grasslands of Dog Canyon, each landscape offers something unique. The variety keeps me inspired - from technical alpine routes to long desert walks under endless skies. There's something about the physical challenge and natural beauty that helps put research problems into perspective and often leads to creative breakthroughs when I return to the lab.</p>
